@@ -38,13 +38,12 @@
                 <hr>
                 </fieldset> 
             </form>
-
             <form action="/cat_save" method="post">
-                <label>Product Category</label>
-                <input type="hidden" name="cat_id" value="<?= $cat['cat_id'] ?? '' ?>">
-                <input type="text" name="category" placeholder="category" value="<?= $_POST['category'] ?? $cat['category'] ?? '' ?>">
+                <label >Add a Category: </label>
+                <input  type="hidden" name="cat_id" value="<?= $cat['cat_id'] ?? '' ?>">
+                <input style="margin-left:30px;" type="text" name="category" placeholder="category" value="<?= $_POST['category'] ?? $cat['category'] ?? '' ?>">
                 <br>
-                <input style= "margin-left:50%;" type="submit" name="update">
+                <input class=btn style= "margin-left:70%;" type="submit" name="update">
             </form>
         </div>
     </div>
@@ -52,8 +51,8 @@
     <div class="records">
         <div class="recordcontainer">
             <fieldset>
-            <hr>
                 <h1>Product Category</h1>
+                <hr>
                 <ul>
                     <?php foreach ($category as $cat): ?>
                         <li>
