@@ -6,11 +6,12 @@ use App\Controllers\BaseController;
 
 class ProductController extends BaseController
 {
-    
+        private $category;
         private $product;
         public function __construct()
         {
             $this->product = new \App\Models\ProductModel();
+            $this->category = new \App\Models\CategoryModel();
         }
     
         public function delete($id)
@@ -23,7 +24,8 @@ class ProductController extends BaseController
         {
             $data = [
                 'product' => $this->product->findAll(),
-                'pro' => $this->product->where('id', $id)->first(),           
+                'pro' => $this->product->where('id', $id)->first(), 
+                'category' => $this->category->distinct()->findAll(),          
             ];
             return view('products', $data);
         }
@@ -46,6 +48,38 @@ class ProductController extends BaseController
             }
             return redirect()->to('/product');
         }
+
+
+        public function cat_delete($cat_id)
+        {
+            $this->category->delete($cat_id);
+            return redirect()->to('/product');
+        }
+    
+        public function cat_edit($cat_id)
+        {
+            $data = [
+                'product' => $this->product->findAll(),
+                'cat' => $this->category->where('cat_id', $cat_id)->first(), 
+                'category' => $this->category->distinct()->findAll(),          
+            ];
+            return view('products', $data);
+        }
+        
+        public function cat_save()
+        {   
+            $cat_id =$_POST['cat_id'];
+            $data = [
+                'category' => $this->request->getVar('category'),
+            ];
+            if($cat_id != null){
+               $this->category->set($data)->where('cat_id', $cat_id)->update();
+            }
+            else{
+                 $this->category->save($data);
+            }
+            return redirect()->to('/product');
+        }
     
     
         public function product($product)
@@ -56,6 +90,7 @@ class ProductController extends BaseController
         public function montellano()
         {
             $data['product'] = $this->product->findAll();
+            $data['category'] = $this->category->findAll();
             return view('products', $data);
         }
     

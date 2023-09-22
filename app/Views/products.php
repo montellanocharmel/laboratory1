@@ -21,7 +21,12 @@
                 <input type="text" name="description" placeholder="description" value="<?= $_POST['description'] ?? $pro['description'] ?? '' ?>">
                 <br>
                 <label>Category:</label>
-                <input type="text" name="category" placeholder="category" value="<?= $_POST['category'] ?? $pro['category'] ?? '' ?>">
+                <select name="category" id="category">
+                    <option>Select a Category</option>
+                    <?php foreach ($category as $cate) {
+                        echo "<option value =".$cate['category'].">".$cate['category']."</option>";
+                    }?>
+                 </select>
                 <br>
                 <label>Quantity:</label>
                 <input type="text" name="quantity" placeholder="quantity" value="<?= $_POST['quantity'] ?? $pro['quantity'] ?? '' ?>">
@@ -33,34 +38,45 @@
                 <hr>
                 </fieldset> 
             </form>
+
+            <form action="/cat_save" method="post">
+                <label>Product Category</label>
+                <input type="hidden" name="cat_id" value="<?= $cat['cat_id'] ?? '' ?>">
+                <input type="text" name="category" placeholder="category" value="<?= $_POST['category'] ?? $cat['category'] ?? '' ?>">
+                <br>
+                <input style= "margin-left:50%;" type="submit" name="update">
+            </form>
         </div>
     </div>
+
     <div class="records">
         <div class="recordcontainer">
             <fieldset>
+            <hr>
+                <h1>Product Category</h1>
+                <ul>
+                    <?php foreach ($category as $cat): ?>
+                        <li>
+                        <strong>Category:</strong> <?= $cat['category'] ?><br>
+                                <a href="/cat_delete/<?= $cat['cat_id'] ?>" class="delete">Delete</a> || <a href="/cat_edit/<?= $cat['cat_id'] ?>">Update</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             <h1>Product Listing</h1> <hr>
-            <table border='1'>
-                <tr>
-                    <th>- Name -</th>
-                    <th>-Description-</th>
-                    <th>-Category-</th>
-                    <th>-Quantity-</th>
-                    <th>-Price-</th>
-                    <th>-Action-</th>
-                </tr>
+                 <ul>
+                    <?php foreach ($product as $pr): ?>
+                        <li>
+                            <strong>Product Name:</strong> <?= $pr['name'] ?><br>
+                            <strong>Description:</strong> <?= $pr['description'] ?><br>
+                            <strong>Category:</strong> <?= $pr['category'] ?><br>
+                            <strong>Quantity:</strong> <?= $pr['quantity'] ?><br>
+                            <strong>Price:</strong> <?= $pr['price'] ?><br>
+                            <a href="/delete/<?= $pr['id'] ?>" class="delete">Delete</a> || <a href="/edit/<?= $pr['id'] ?>">Update</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </fieldset>
 
-                <?php foreach($product as $pr): ?>
-                    <tr>
-                        <td><?= $pr['name'] ?></td>
-                        <td><?= $pr['description'] ?></td>
-                        <td><?= $pr['category'] ?></td>
-                        <td><?= $pr['quantity'] ?></td>
-                        <td><?= $pr['price'] ?></td>
-                        <td><a href="/delete/<?= $pr['id'] ?>">delete</a> || <a href="/edit/<?= $pr['id'] ?>">edit</a></td>
-                    </tr>
-                <?php endforeach; ?>
-                </fieldset>
-            </table>
         </div>
     </div>
 </main>
@@ -94,7 +110,7 @@ body{
     background: #181a1e;
 }
 
-h1, label, table, th, a{
+h1, label, table, th, a, ul{
     color: white;
 }
 

@@ -11,3 +11,6 @@ $routes->get('/product/(:any)', 'ProductController::product/$1');
 $routes->post('/save', 'ProductController::save');
 $routes->get('/delete/(:any)', 'ProductController::delete/$1');
 $routes->get('/edit/(:any)', 'ProductController::edit/$1');
+$routes->post('/cat_save', 'ProductController::cat_save');
+$routes->get('/cat_delete/(:any)', 'ProductController::cat_delete/$1');
+$routes->get('/cat_edit/(:any)', 'ProductController::cat_edit/$1');
